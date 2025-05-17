@@ -1,0 +1,93 @@
+1. Basic knowledge of Networking TCP, DNS, HTTP calls.
+	TCP: Architecture agnostic netowrk protocol for generic communications.
+		Historically, only machines of the same architecture could speak with each other. That is stupid, so we made TCP/IP language agnostic.
+		Has 4 layers: Physical, Data Link, Network, Transport, Application
+		OSI is an adjacent model/competitor of TCP that is better but less adopted.
+		Has receipts and is slower than UDP.
+		
+	DNS: A network protocol used for domain to ip address mapping.
+		Communications over the interent is handled through ip addresses, not domain names. So there must be a way to map the strings of domain names to the true IP address.
+			Analogy: We do not remember the phone numbers of our friends, we use the Contacts app to route friend names to their contact information.
+		Note: DNS includes webservices such as node endpoints, not just webpages.
+		IP address may be stored in cache and not need to use DNS service if website was recently visited.
+			The device that caches the IP address is called the stub resolver.
+		Suppose the stub resolver reaches out to a DNS service to find the IP address of a specific domain. The DNS service may not know the IP address, and will query other DNS services for the information.
+			There are "root" DNS services that forward DNS requests to the appropriate DNS service. 
+			Each DNS service handles one/multiple level(s) of the domain and forwards the remaining domain name to another service.
+		Ex. Consider the domain name: academy.networkchuck.com
+			".com" <- Top level domain
+			".networkchuck" <- Second level domain
+			"academy" <- Third level domain
+		DNS Service is insecure -- unencrypted and uses port 53.
+			"DNS spoofing"
+		Securing a connection: "DNS over HTTPS" (DoH)
+			HTTPS is secure.
+		DNS Records: A databse stored on a computer that maintains a domain name to ip address mapping
+		
+	HTTP calls: A network protocol that governs how computers talk to each other.
+		"Hyper Text Transfer Protocol"
+		3 objects of interest:
+			Client (Local) - The machine that is trying to get data.
+			Router - Forwards the Client to the Service
+			Service (Remote) - The machine which might contain data the Client wants.
+				Sends error/status code if it does not have the data the Client wants.
+		Status Codes:
+			1xx: Informational
+			2xx: Success
+				Ex. 200 is success
+			3xx: Redirection
+			4xx: Client Error
+				Ex: 404 Error
+			5xx: Sercer Error
+		Consider the sturcture of a HTTP Request:
+			Every HTTP request has a header of metadata, and then a body of the actual data of interest.
+			Structure:
+				Start Line
+					Method/Target/Version info
+				Header(s)
+				Body
+		HTTP Response Structure
+			Structure:
+				Start Line
+					Version/Status Code/Status Text
+				Headers
+				Body
+		HTTP: Stateless
+		Based on TCP/IP
+		3 parts of each message: Start Line/Headers/Body (for both Request and Repsonse messages)
+		There are many requests associated with a single action.	
+		
+2. Basics of Internet Relay Chat:
+	Legacy real time communication protocol.
+	First widely accepted, open source communication method.
+	Still used by hackers.
+	Standard client/server setup.
+		Anyone connected to the server is relayed data to each other.
+		Anyone can set up a server.
+	Somewhat anonymous.
+	SSL used to secure sockets.
+	
+3. What nslookup or dig commands via the command line and what they do with websites.
+	dig and nslookup are used to query the DNS for information about domain names/ip addresses.
+	They provide the same information, but they work differently.
+		Can be used to validate each other
+		Inconsistent data obtained from dig and nslookup is interesting.
+	dig is written using the basic C libraries
+	nslookup uses internal commands.
+	
+4. Basic python programming with the pyshark python programming language.
+	Pyshark includes Scapy, which I used for Data Viz project.
+	It looks easy enough.
+5. Knowledge of how to examine a pcap in wireshark.
+	You drop it into the app.
+6. Familiarity with how to use the website cyberchef may help also for some tasks.
+	Cyberchef
+		Used to encode/decode stirngs.
+		Can be used to parse/write binary data to/from plaintext
+			Its configurable Wireshark with an Apache license
+		Holy fuck it has linting.
+		Just look up CyberChef recipes other people have created.
+		
+Assignment Notes
+	To run John the Ripper, go to the run/ directory and use >john.exe
+	

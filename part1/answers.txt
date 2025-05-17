@@ -1,0 +1,35 @@
+1.1. lead.libera.chat[94.125.182.252/6667]
+    Based on how the question is asked, I think they want the string.
+    For now, its not obvious, so lets keep both the string and the ip/port
+1.2. PingWizard,CodePhanton,ByteRunner
+    There are other names like !~ZenCipher that didn't seem to show up as often...
+1.3. #tnc25_
+1.4. 4049f7c78449443fd2451a8520109b7f10c17b85640017b34cbf96866efe3171
+1.5. Hungary
+    You can see PingWizard is from Budapest, HU
+
+2.1. CodePhanton
+    Its a convo between PingWizard and CodePhanton.
+    In IRC chat, we see PingWizard send CodePhanton a file
+    In the convo, we see blue says "i got the file you are looking for", so blue must be PingWizard.
+    Red started the chat, so red must be CodePhanton
+2.2. file_1600.nen
+2.3. PGP
+    But this doesn't make sense. PGP requires a private key and a public key, but none are given.
+    Can be filtered for with:
+        ip.addr == 10.0.0.7 && tcp.port == 54115
+2.4. 
+    Skip this one for.
+    I don't have the public/private keys to decode this...
+    Can be filtered for with:
+        ip.addr == 10.0.0.7 && tcp.port == 54115
+
+3.1. necrocryptors.com
+    Looked at list of DNS requests, and this stood out.
+3.2. 168.63.129.16
+3.3. ns-cloud-e1.googledomains.com
+    Lookup a DNS request containing necrocryptors.com (that didn't error) and go to it's response message.
+    The response will contain the DNS server.
+3.4. 62a8e21af70b76d0c7f5d17db53d48cddc705913ea7e2c72feb8c98f7177ac285aa502e0266ef032b1942e2737435624d9c22a60b688cdbcb8e61caee69ab728
+
+4.1. 
