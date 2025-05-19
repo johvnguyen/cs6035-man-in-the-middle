@@ -21,18 +21,17 @@
     Can be filtered for with:
         ip.addr == 10.0.0.7 && tcp.port == 54115
 2.4. 
-    Skip this one for now.
-    I don't have the public/private keys to decode this...
-    Can be filtered for with:
-        ip.addr == 10.0.0.7 && tcp.port == 54115
-    I am looking for CodePhanton's private key
-    <Setting name="ProvisionCertificate|TenantEncryptionCert" value="sha1:20407955B653D58AD4C41AAECDE3E63506002C22" />
-    ip.dst == 10.0.0.7 && frame.time_relative >= 3418 && frame.time_relative <= 4141
+    They key is sent in the mitm_private.zip and can be found with tcp.stream eq 2262
+
+
+
     
 
 3.1. necrocryptors.com
     Looked at list of DNS requests, and this stood out.
 3.2. 168.63.129.16
+    Or is it 20.109.1.166?
+    Is it 216.239.32.110?
 3.3. ns-cloud-e1.googledomains.com
     Lookup a DNS request containing necrocryptors.com (that didn't error) and go to it's response message.
     The response will contain the DNS server.
@@ -45,17 +44,70 @@
 4.4. file_2600.findout
 4.5. Python
     Found in packet tcp.stream == 2661
-4.6.
+4.6. 61a0ec12f60f7edacbfcda73ba3842c4df7a5318ec742577f8b2ce8c7e78a824
     I dont know how to convert tcp.stream == 2661 into a Python package.
 
 5.1. 62a8e21af70b76d0c7f5d17db53d48cddc705913ea7e2c72feb8c98f7177ac28afa268452362a1c7a81fe87a43b2db669a6228901000a12c99bb3690c90d4f8d
-    IDK
+    There is "hidden text" in the webpage that is encoded in Base64 + Rotation Cipher.
+    Go to http://www.didbastionbreak.com:5000/ohyoufoundit.html and input GT id.
 5.2. 8030276
     Ran John the Ripper
 5.3. 62a8e21af70b76d0c7f5d17db53d48cddc705913ea7e2c72feb8c98f7177ac28fccf03b0a7ae0531210768cce4851f9f48b5d3d491d0ae9552b0e5a7136080dc
     After openning with password, we get base 64
     Putting it into base 64, we apply the [A-Z]+13 rotation cipher to get the program
+    
+7.1. "192.168.1.10"
+    Used the query:
+        BobbyTables
+        | where isnotempty(SrcPublicIps)
+        | extend IPs = split(SrcPublicIps, ",")
+        | mv-expand IPs
+        | extend IPString = tostring(IPs)
+        | summarize Count = count() by TrimmedIP = trim(" ", IPString)
+        | top 1 by Count desc
+7.2. "10.0.0.99"
+    Found using query:
+    BobbyTables
+        | where DestPort == "80" or DestPort == "443"
+        | where isnotempty(SrcPublicIps)
+        | extend IPArray = split(SrcPublicIps, ",")
+        | mv-expand IPArray
+        | extend IP = trim(" ", tostring(IPArray))
+        | summarize CommunicationCount = count() by IP
+        | order by CommunicationCount desc
+
+7.3. 62aced13f20477dfcdf3d671b73b44c1d9745f15ec792e72fdb2c9867a7ba826
+    Used the query:
+        BobbyTables
+        | extend IPs = split(SrcPublicIps, ",")
+        | mv-expand IPs
+        | extend IP = trim(" ", tostring(IPs))
+        | summarize Count = count() by IP
+        | top 5 by Count desc
+    AND
+        BobbyTables
+        | extend IPs = split(SrcPublicIps, ",")
+        | mv-expand IPs
+        | extend IP = trim(" ", tostring(IPs))
+        | where IP == "10.0.0.99"
+        | where isnotempty(packet_data)
+        | extend Decoded = base64_decode_tostring(packet_data)
+        | project SrcPorts, Decoded
+    and found flag7.py
 
 
 
 
+5/18 Submission:
+    Wrong: 3.1, 3.2, 7.1, 7.2, 7.3, 1.5, 2.4
+    Fixes:
+        1.5. Replaced Hungary with HU
+        2.4. DONE
+        3.1. Done 
+        3.2. Try 20.109.1.66 -- it is the server that the private key was downloaded from.
+            I am still unsure about this one...
+        Flag 7 is EC
+
+5/19 Submission:
+    Wrong: 3.2, 7.3, 1.5
+    

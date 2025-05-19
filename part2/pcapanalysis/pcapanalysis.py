@@ -45,9 +45,9 @@ class MITMProject(object):
         # TODO: Implement me 
         for packet in self.cap:
             if 'icmp' in packet:
-                if packet.icmp.type == 8:
+                if packet.icmp.type == '8':
                     r += 1
-                elif packet.icmp.type == 0:
+                elif packet.icmp.type == '0':
                     a += 1
 
         return r,a 
